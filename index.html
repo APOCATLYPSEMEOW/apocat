@@ -342,22 +342,21 @@
       showToast('No wallet detected');
       return;
     }
-    window.ethereum.request({
-      method: 'wallet_watchAsset',
-      params: {
-        type: 'ERC20',
-        options: {
-          address: '0x44e136ea30ff93ab1d2a64f598719cc855bbcd7e',
-          symbol: 'APOCAT',
-          decimals: 18,
-          image: 'https://www.apocat.ch/logo.png',
-        },
+    var tokenParams = {
+      type: 'ERC20',
+      options: {
+        address: '0x44e136ea30ff93ab1d2a64f598719cc855bbcd7e',
+        symbol: 'APOCAT',
+        decimals: 18,
       },
-    }).then(function(added) {
-      showToast(added ? 'APOCAT added to wallet' : 'Not added');
-    }).catch(function() {
-      showToast('Request rejected');
-    });
+    };
+    window.ethereum.request({ method: 'wallet_watchAsset', params: tokenParams })
+      .then(function(added) {
+        showToast(added ? 'APOCAT added to wallet' : 'Not added');
+      })
+      .catch(function() {
+        showToast('Request rejected');
+      });
   }
 
   function showToast(msg) {
